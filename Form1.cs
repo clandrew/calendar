@@ -208,6 +208,9 @@ namespace Calendar
 
             lastClicked = laidOut.Pick(x, y);
 
+            if (lastClicked == null)
+                return;
+
             editNotesToolStripMenuItem.Text = "Edit (" + lastClicked.Date.ToShortDateString() + ") ...";
 
             contextMenuStrip1.Show(
