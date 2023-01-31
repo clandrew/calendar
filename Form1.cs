@@ -78,6 +78,19 @@ namespace Calendar
             return null;
         }
 
+        private void OpenImpl(string filePath)
+        {
+            string errorMsg = TryParseDataFile(filePath);
+            if (errorMsg != null)
+            {
+                MessageBox.Show(errorMsg);
+                return;
+            }
+
+            laidOut.AttachNotes(entries);
+            panel1.Invalidate();
+        }
+
         private void openToolStripMenuItem_Click(object sender, EventArgs ev)
         {
             string appPath = Path.GetDirectoryName(Application.ExecutablePath);
@@ -94,22 +107,11 @@ namespace Calendar
                 return;
             }
 
-            string filePath = openFileDialog1.FileName;
-            string errorMsg = TryParseDataFile(filePath);
-            if (errorMsg != null)
-            {
-                MessageBox.Show(errorMsg);
-                return;
-            }
-
-            laidOut.AttachNotes(entries);
-            panel1.Invalidate();
+            OpenImpl(openFileDialog1.FileName);
         }
 
         void InitializeMonth()
         {
-            dayOfWeekStartIndexForThisMonth = (int)displayedMonth.DayOfWeek;
-            daysThisMonth = DateTime.DaysInMonth(displayedMonth.Year, displayedMonth.Month);
             laidOut.LayOut(panel1.Width, panel1.Height, displayedMonth, entries);
             ModifyMonthLabel();
         }
