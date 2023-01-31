@@ -145,6 +145,26 @@ namespace Calendar
                 }
             }
         }
+
+        public void AttachNotes(List<Form1.Entry> entries)
+        {
+            int cellIndex = 0;
+            for (int yDay = 0; yDay < 5; ++yDay)
+            {
+                for (int xDay = 0; xDay < 7; ++xDay)
+                {
+                    DateTime currentDay = dateCells[cellIndex].Date;
+
+                    dateCells[cellIndex].SourceEntry = entries.Find(x => (
+                        x.Date.Day == currentDay.Day &&
+                        x.Date.Month == currentDay.Month &&
+                        x.Date.Year == currentDay.Year));
+
+                    cellIndex++;
+                }
+            }
+        }
+
         public void Draw(Graphics graphics, int xOrigin, int yOrigin)
         {
             graphics.TranslateTransform(xOrigin, yOrigin);

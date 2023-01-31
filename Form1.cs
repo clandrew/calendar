@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows;
+using System.IO;
+using System.Windows.Forms;
 
 namespace Calendar
 {
@@ -37,29 +39,81 @@ namespace Calendar
 
             entries = new List<Entry>();
 
-            string[] lines = System.IO.File.ReadAllLines(@"..\..\Data.txt");
-            for (int i=0; i<lines.Length; ++i)
+            laidOut = new LaidOut();
+            laidOut.Initialize();
+            laidOut.GeneralLayout(panel1.CreateGraphics(), panel1.Width, panel1.Height);
+            displayedMonth = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1);
+            InitializeMonth();
+        }
+
+        // Returns null on success.
+        // Returns string error on failure.
+        string TryParseDataFile(string filePath)
+        {
+            string[] lines = System.IO.File.ReadAllLines(filePath);
+            for (int i = 0; i < lines.Length; ++i)
             {
                 Entry e = new Entry();
 
-                DateTime convertedDate = DateTime.Parse(lines[i]);
+                DateTime convertedDate;
+                if (!DateTime.TryParse(lines[i], out convertedDate))
+                {
+                    return "Error at line " + (i + 1) + ": expected a date in format mm/dd/yyyy, instead found: " + lines[i] + ".";
+                }
+
                 e.Date = convertedDate;
                 e.Notes = new List<string>();
+
                 ++i;
                 while (lines[i][0] != '/')
                 {
+                    if (i + 1 == lines.Length)
+                    {
+                        return "Error at line " + ( i + 1) + ": expected a '/' delimiter, instead found <end of file>.";
+                    }
+                    if (e.Notes.Count >= 5)
+                    {
+                        return "Error at line " + (i + 1) + ": attempted to add more than 4 lines of notes.";
+                    }
+                    if (lines[i].Length > 64)
+                    {
+                        return "Error at line " + (i + 1) + ": the note is length " + lines[i].Length + ", which is longer than the maximum of 64.";
+                    }
                     e.Notes.Add(lines[i]);
                     ++i;
                 }
 
                 entries.Add(e);
             }
+            return null;
+        }
 
-            laidOut = new LaidOut();
-            laidOut.Initialize();
-            laidOut.GeneralLayout(panel1.CreateGraphics(), panel1.Width, panel1.Height);
-            displayedMonth = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1);
-            InitializeMonth();
+        private void openToolStripMenuItem_Click(object sender, EventArgs ev)
+        {
+            string appPath = Path.GetDirectoryName(Application.ExecutablePath);
+
+            openFileDialog1.InitialDirectory = appPath;
+            openFileDialog1.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
+            openFileDialog1.FilterIndex = 2;
+            openFileDialog1.RestoreDirectory = true;
+            openFileDialog1.DefaultExt = "txt";
+            openFileDialog1.FileName = "Data.txt";
+
+            if (openFileDialog1.ShowDialog() != DialogResult.OK)
+            {
+                return;
+            }
+
+            string filePath = openFileDialog1.FileName;
+            string errorMsg = TryParseDataFile(filePath);
+            if (errorMsg != null)
+            {
+                MessageBox.Show(errorMsg);
+                return;
+            }
+
+            laidOut.AttachNotes(entries);
+            panel1.Invalidate();
         }
 
         void InitializeMonth()
