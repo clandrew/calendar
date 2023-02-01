@@ -40,7 +40,15 @@ namespace Calendar
         // Returns string error on failure.
         string TryParseDataFile(string filePath)
         {
-            string[] lines = System.IO.File.ReadAllLines(filePath);
+            string[] lines = null;
+            try
+            {
+                lines = System.IO.File.ReadAllLines(filePath);
+            }
+            catch (System.IO.FileNotFoundException e)
+            {
+                return "Unable to open file " + filePath + ".";
+            }
             for (int i = 0; i < lines.Length; ++i)
             {
                 Entry e = new Entry();
@@ -83,7 +91,7 @@ namespace Calendar
             string errorMsg = TryParseDataFile(filePath);
             if (errorMsg != null)
             {
-                MessageBox.Show(errorMsg);
+                MessageBox.Show(errorMsg, "Error loading file");
                 return;
             }
 
