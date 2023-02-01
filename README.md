@@ -11,7 +11,7 @@ Features:
 
 Looks like this:
 
-![Image](https://raw.githubusercontent.com/clandrew/calendar/main/Images/Screenshot.png "Image")
+![Image](https://raw.githubusercontent.com/clandrew/calendar/main/Images/Screenshot.PNG "Image")
 
 ## Build
 The project is in C#, built with Visual Studio 2019. The Any CPU (x64 or x86) build configuration is supported.
