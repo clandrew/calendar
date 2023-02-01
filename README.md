@@ -15,6 +15,8 @@ Looks like this:
 
 ## Interface
 
+On the calendar, today is highlighted in blue. The current day is queried from the system time.
+
 **Previous Month:** Click this button to navigate to the previous month.
 
 **Next Month:** Click this button to navigate to the next month.
