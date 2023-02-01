@@ -7,7 +7,7 @@ Features:
 * No browser or log in, small memory footprint and executable size
 * Print support
 
-**Important:** This application doesn't try to solve the problem of syncing your calendar data across locations or across devices. In fact it doesn't connect to the internet. It's up to the application user to decide how to manage the calendar data file.
+**Important:** This application doesn't try to solve the problem of syncing your calendar data across locations or across devices. In fact it doesn't connect to the internet. It's up to the user to decide how to manage this.
 
 Looks like this:
 
