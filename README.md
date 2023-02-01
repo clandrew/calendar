@@ -13,6 +13,20 @@ Looks like this:
 
 ![Image](https://raw.githubusercontent.com/clandrew/calendar/main/Images/Screenshot.PNG "Image")
 
+## Interface
+
+**Previous Month:** Click this button to navigate to the previous month.
+
+**Next Month:** Click this button to navigate to the next month.
+
+**Add/Edit notes:** Right click on any cell in the calendar, choose Edit(...) in the context menu, and edit the text in the pop-up dialog. To confirm, click OK.
+
+
+![Image](https://raw.githubusercontent.com/clandrew/calendar/main/Images/Screenshot2.PNG "Image")
+
+
+![Image](https://raw.githubusercontent.com/clandrew/calendar/main/Images/Screenshot3.PNG "Image")
+
 ## Build
 The project is in C#, built with Visual Studio 2019. The Any CPU (x64 or x86) build configuration is supported.
 
