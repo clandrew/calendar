@@ -10,6 +10,8 @@ namespace Calendar
     {
         DateTime displayedMonth;
         LaidOut laidOut;
+        LaidOut.PickResult lastClicked;
+        string currentlyOpenedFilePath;
 
         public class Entry
         {
@@ -95,20 +97,28 @@ namespace Calendar
                 return;
             }
 
+            currentlyOpenedFilePath = filePath;
+
             laidOut.AttachNotes(entries);
             panel1.Invalidate();
         }
 
         private void openToolStripMenuItem_Click(object sender, EventArgs ev)
         {
-            string appPath = Path.GetDirectoryName(Application.ExecutablePath);
-
-            openFileDialog1.InitialDirectory = appPath;
+            if (currentlyOpenedFilePath != null)
+            {
+                openFileDialog1.InitialDirectory = Path.GetDirectoryName(currentlyOpenedFilePath);
+                openFileDialog1.FileName = Path.GetFileName(currentlyOpenedFilePath);
+            }
+            else
+            {
+                openFileDialog1.InitialDirectory = Path.GetDirectoryName(Application.ExecutablePath);
+                openFileDialog1.FileName = "Data.txt";
+            }
             openFileDialog1.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
             openFileDialog1.FilterIndex = 2;
             openFileDialog1.RestoreDirectory = true;
             openFileDialog1.DefaultExt = "txt";
-            openFileDialog1.FileName = "Data.txt";
 
             if (openFileDialog1.ShowDialog() != DialogResult.OK)
             {
@@ -180,7 +190,31 @@ namespace Calendar
             laidOut.Draw(e.Graphics, xOrigin, temp.Height+5);
         }
 
-        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        private bool SaveImpl(string fileName)
+        {
+            try
+            {
+                using (System.IO.StreamWriter sw = new System.IO.StreamWriter(fileName))
+                {
+                    for (int i = 0; i < entries.Count; ++i)
+                    {
+                        sw.WriteLine(entries[i].Date.ToShortDateString());
+                        for (int j = 0; j < entries[i].Notes.Count; ++j)
+                        {
+                            sw.WriteLine(entries[i].Notes[j]);
+                        }
+                        sw.WriteLine("/");
+                    }
+                }
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
+
+        private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             saveFileDialog1.Title = "Save Calendar File";
             saveFileDialog1.Filter = "Text file|*.txt";
@@ -190,21 +224,23 @@ namespace Calendar
                 return;
             }
 
-            using (System.IO.StreamWriter sw = new System.IO.StreamWriter(saveFileDialog1.FileName))
+            if (!SaveImpl(saveFileDialog1.FileName))
             {
-                for (int i=0; i<entries.Count; ++i)
-                {
-                    sw.WriteLine(entries[i].Date.ToShortDateString());
-                    for (int j=0; j<entries[i].Notes.Count; ++j)
-                    {
-                        sw.WriteLine(entries[i].Notes[j]);
-                    }
-                    sw.WriteLine("/");
-                }
+                MessageBox.Show("An error occurred when attempting to save " + saveFileDialog1.FileName + ".", "Save");
             }
         }
 
-        LaidOut.PickResult lastClicked;
+        private void saveToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            if (SaveImpl(currentlyOpenedFilePath))
+            {
+                MessageBox.Show("Save completed.", "Save");
+            }
+            else
+            {
+                MessageBox.Show("An error occurred when attempting to save " + currentlyOpenedFilePath + ".", "Save");
+            }
+        }
 
         private void panel1_MouseClick(object sender, MouseEventArgs e)
         {
