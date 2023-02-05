@@ -314,6 +314,7 @@ namespace Calendar
         {
             displayedMonth = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1);
             InitializeMonth();
+            panel1.Invalidate();
         }
 
         private void autoopenLastFileToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
