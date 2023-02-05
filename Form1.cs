@@ -37,10 +37,15 @@ namespace Calendar
             displayedMonth = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1);
             InitializeMonth();
 
-            string lastPath = Properties.Settings.Default.LastOpenedDataFilePath;
-            if (lastPath != null && lastPath.Length > 0)
+            autoopenLastFileToolStripMenuItem.Checked = Properties.Settings.Default.AutoOpenLastFile;
+
+            if (autoopenLastFileToolStripMenuItem.Checked)
             {
-                OpenImpl(lastPath);
+                string lastPath = Properties.Settings.Default.LastOpenedDataFilePath;
+                if (lastPath != null && lastPath.Length > 0)
+                {
+                    OpenImpl(lastPath);
+                }
             }
         }
 
@@ -309,6 +314,12 @@ namespace Calendar
         {
             displayedMonth = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1);
             InitializeMonth();
+        }
+
+        private void autoopenLastFileToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.AutoOpenLastFile = autoopenLastFileToolStripMenuItem.Checked;
+            Properties.Settings.Default.Save();
         }
     }
 }

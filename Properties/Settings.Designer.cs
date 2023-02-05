@@ -34,5 +34,17 @@ namespace Calendar.Properties {
                 this["LastOpenedDataFilePath"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool AutoOpenLastFile {
+            get {
+                return ((bool)(this["AutoOpenLastFile"]));
+            }
+            set {
+                this["AutoOpenLastFile"] = value;
+            }
+        }
     }
 }
