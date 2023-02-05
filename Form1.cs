@@ -25,6 +25,8 @@ namespace Calendar
             InitializeComponent();
             this.FormBorderStyle = FormBorderStyle.FixedDialog;
 
+            FixDefaultPrintButton();
+
             monthLabel.Location = new Point(
                 this.Width / 2 - (monthLabel.Width / 2), 
                 monthLabel.Location.Y);
@@ -47,6 +49,26 @@ namespace Calendar
                     OpenImpl(lastPath);
                 }
             }
+        }
+
+        private void FixDefaultPrintButton()
+        {
+            // This is a bit silly- the .NET print preview dialog has a print button that
+            // immediately prints to the default device. No option to let the user choose a device. It's also not 
+            // sufficient to add a new event handler to the existing button, because that doesn't remove the
+            // unwanted, already-existing handler to the button (which prints right to the device).
+
+            // We can fix this by removing the print button, and attaching a new one that does what we want.
+
+            ToolStripButton unwantedPrintButton = (ToolStripButton)(((ToolStrip)(printPreviewDialog1.Controls[1])).Items[0]);
+            Image printIcon = unwantedPrintButton.Image;
+            ((ToolStrip)(printPreviewDialog1.Controls[1])).Items.Remove(unwantedPrintButton);
+
+            ToolStripButton fixedPrintButton = new ToolStripButton();
+            fixedPrintButton.Image = printIcon;
+            fixedPrintButton.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            fixedPrintButton.Click += FixedPrintButton_Click;
+            ((ToolStrip)(printPreviewDialog1.Controls[1])).Items.Insert(0, fixedPrintButton);
         }
 
         // Returns null on success.
@@ -180,11 +202,36 @@ namespace Calendar
 
         private void printToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            // Open print preview dialog
             printDocument1.DefaultPageSettings.Landscape = true;
+
+            string printDocumentName = "Calendar - " + displayedMonth.ToString("MMMM") + " " + displayedMonth.Year;
+
+            if (currentlyOpenedFilePath != null)
+            {
+                printDocumentName += " (" + Path.GetFileName(currentlyOpenedFilePath) + ")";
+            }
+            printDocument1.DocumentName = printDocumentName;
 
             printPreviewDialog1.Document = printDocument1;
             printPreviewDialog1.PrintPreviewControl.Zoom = 1;
             printPreviewDialog1.ShowDialog();
+        }
+
+        private void FixedPrintButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                printDialog1.Document = printDocument1;
+                if (printDialog1.ShowDialog() == DialogResult.OK)
+                {
+                    printDocument1.Print();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, ToString());
+            }
         }
 
         private void printDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
