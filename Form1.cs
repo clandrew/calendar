@@ -36,6 +36,12 @@ namespace Calendar
             laidOut.GeneralLayout(panel1.CreateGraphics(), panel1.Width, panel1.Height);
             displayedMonth = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1);
             InitializeMonth();
+
+            string lastPath = Properties.Settings.Default.LastOpenedDataFilePath;
+            if (lastPath != null && lastPath.Length > 0)
+            {
+                OpenImpl(lastPath);
+            }
         }
 
         // Returns null on success.
@@ -101,6 +107,9 @@ namespace Calendar
 
             laidOut.AttachNotes(entries);
             panel1.Invalidate();
+
+            Properties.Settings.Default.LastOpenedDataFilePath = filePath;
+            Properties.Settings.Default.Save();
         }
 
         private void openToolStripMenuItem_Click(object sender, EventArgs ev)
