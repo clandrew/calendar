@@ -159,7 +159,7 @@ namespace Calendar
             panel1.Invalidate();
         }
 
-        private void closeToolStripMenuItem_Click(object sender, EventArgs e)
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.Close();
         }
@@ -294,6 +294,12 @@ namespace Calendar
             }
 
             lastClicked = null;
+        }
+
+        private void refreshToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            displayedMonth = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1);
+            InitializeMonth();
         }
     }
 }
