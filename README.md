@@ -5,6 +5,7 @@ Features:
 * Robustly handles date and time constraints including leap years
 * Fast to start up and shut down
 * No browser or log in, small memory footprint and executable size
+* Underlying notes data are in a text-based format for convenient import and export to other programs
 * Print support
 
 **Important:** This application doesn't try to solve the problem of syncing your calendar data across locations or across devices. In fact it doesn't connect to the internet. It's up to the user to decide how to manage this.
