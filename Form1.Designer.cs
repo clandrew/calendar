@@ -44,8 +44,13 @@ namespace Calendar
             this.printToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.remoteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.customRemoteDataSaveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.customRemoteDataLoadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.autoopenLastFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.editCustomRemoteCommandsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.printPreviewDialog1 = new System.Windows.Forms.PrintPreviewDialog();
             this.printDocument1 = new System.Drawing.Printing.PrintDocument();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
@@ -100,6 +105,7 @@ namespace Calendar
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
+            this.remoteToolStripMenuItem,
             this.optionsToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
@@ -175,10 +181,38 @@ namespace Calendar
             this.closeToolStripMenuItem.Text = "Exit";
             this.closeToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
+            // remoteToolStripMenuItem
+            // 
+            this.remoteToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.customRemoteDataSaveToolStripMenuItem,
+            this.customRemoteDataLoadToolStripMenuItem});
+            this.remoteToolStripMenuItem.Name = "remoteToolStripMenuItem";
+            this.remoteToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F2;
+            this.remoteToolStripMenuItem.Size = new System.Drawing.Size(60, 20);
+            this.remoteToolStripMenuItem.Text = "Remote";
+            // 
+            // customRemoteDataSaveToolStripMenuItem
+            // 
+            this.customRemoteDataSaveToolStripMenuItem.Name = "customRemoteDataSaveToolStripMenuItem";
+            this.customRemoteDataSaveToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F2;
+            this.customRemoteDataSaveToolStripMenuItem.Size = new System.Drawing.Size(235, 22);
+            this.customRemoteDataSaveToolStripMenuItem.Text = "Custom Remote Data Save";
+            this.customRemoteDataSaveToolStripMenuItem.Click += new System.EventHandler(this.customRemoteSaveToolStripMenuItem_Click);
+            // 
+            // customRemoteDataLoadToolStripMenuItem
+            // 
+            this.customRemoteDataLoadToolStripMenuItem.Name = "customRemoteDataLoadToolStripMenuItem";
+            this.customRemoteDataLoadToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F4;
+            this.customRemoteDataLoadToolStripMenuItem.Size = new System.Drawing.Size(235, 22);
+            this.customRemoteDataLoadToolStripMenuItem.Text = "Custom Remote Data Load";
+            this.customRemoteDataLoadToolStripMenuItem.Click += new System.EventHandler(this.customRemoteLoadToolStripMenuItem_Click);
+            // 
             // optionsToolStripMenuItem
             // 
             this.optionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.autoopenLastFileToolStripMenuItem});
+            this.autoopenLastFileToolStripMenuItem,
+            this.toolStripSeparator2,
+            this.editCustomRemoteCommandsToolStripMenuItem});
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
             this.optionsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
             this.optionsToolStripMenuItem.Text = "Options";
@@ -189,9 +223,21 @@ namespace Calendar
             this.autoopenLastFileToolStripMenuItem.CheckOnClick = true;
             this.autoopenLastFileToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.autoopenLastFileToolStripMenuItem.Name = "autoopenLastFileToolStripMenuItem";
-            this.autoopenLastFileToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
+            this.autoopenLastFileToolStripMenuItem.Size = new System.Drawing.Size(250, 22);
             this.autoopenLastFileToolStripMenuItem.Text = "Auto-open last file";
             this.autoopenLastFileToolStripMenuItem.CheckedChanged += new System.EventHandler(this.autoopenLastFileToolStripMenuItem_CheckedChanged);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(247, 6);
+            // 
+            // editCustomRemoteCommandsToolStripMenuItem
+            // 
+            this.editCustomRemoteCommandsToolStripMenuItem.Name = "editCustomRemoteCommandsToolStripMenuItem";
+            this.editCustomRemoteCommandsToolStripMenuItem.Size = new System.Drawing.Size(250, 22);
+            this.editCustomRemoteCommandsToolStripMenuItem.Text = "Edit custom remote commands...";
+            this.editCustomRemoteCommandsToolStripMenuItem.Click += new System.EventHandler(this.editCustomRemoteCommandsToolStripMenuItem_Click);
             // 
             // printPreviewDialog1
             // 
@@ -275,6 +321,11 @@ namespace Calendar
         private System.Windows.Forms.ToolStripMenuItem autoopenLastFileToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.PrintDialog printDialog1;
+        private System.Windows.Forms.ToolStripMenuItem remoteToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem customRemoteDataSaveToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem customRemoteDataLoadToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripMenuItem editCustomRemoteCommandsToolStripMenuItem;
     }
 }
 

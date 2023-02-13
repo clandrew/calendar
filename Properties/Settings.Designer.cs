@@ -46,5 +46,29 @@ namespace Calendar.Properties {
                 this["AutoOpenLastFile"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string CustomRemoteDataSaveCommand {
+            get {
+                return ((string)(this["CustomRemoteDataSaveCommand"]));
+            }
+            set {
+                this["CustomRemoteDataSaveCommand"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string CustomRemoteDataLoadCommand {
+            get {
+                return ((string)(this["CustomRemoteDataLoadCommand"]));
+            }
+            set {
+                this["CustomRemoteDataLoadCommand"] = value;
+            }
+        }
     }
 }

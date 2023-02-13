@@ -357,17 +357,77 @@ namespace Calendar
             lastClicked = null;
         }
 
-        private void refreshToolStripMenuItem_Click(object sender, EventArgs e)
+        private void RefreshImpl()
         {
             displayedMonth = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1);
             InitializeMonth();
             panel1.Invalidate();
         }
 
+        private void refreshToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            RefreshImpl();
+        }
+
         private void autoopenLastFileToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
         {
             Properties.Settings.Default.AutoOpenLastFile = autoopenLastFileToolStripMenuItem.Checked;
             Properties.Settings.Default.Save();
+        }
+
+        void RunSemicolonDelimitedCommands(string cmd)
+        {
+            char[] separator = new char[] { ';' };
+            string[] cmdparts = cmd.Split(separator);
+
+            foreach (string s in cmdparts)
+            {
+                System.Diagnostics.Process p = System.Diagnostics.Process.Start("CMD.exe", s);
+                p.WaitForExit();
+            }
+        }
+
+        private void customRemoteSaveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string saveCmd = Properties.Settings.Default.CustomRemoteDataSaveCommand;
+            if (saveCmd == null || saveCmd.Length == 0)
+            {
+                MessageBox.Show("No custom remote data save command was specified.", "Error");
+                return;
+            }
+
+            RunSemicolonDelimitedCommands(saveCmd);
+        }
+
+        private void customRemoteLoadToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string loadCmd = Properties.Settings.Default.CustomRemoteDataLoadCommand;
+            if (loadCmd == null || loadCmd.Length == 0)
+            {
+                MessageBox.Show("No custom remote data load command was specified.", "Error");
+                return;
+            }
+
+            RunSemicolonDelimitedCommands(loadCmd);
+
+            RefreshImpl();
+        }
+
+        private void editCustomRemoteCommandsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            EditCustomRemoteCommandsDialog d = new EditCustomRemoteCommandsDialog();
+
+            d.StartPosition = FormStartPosition.CenterParent;
+            d.SaveCommandText = Properties.Settings.Default.CustomRemoteDataSaveCommand;
+            d.LoadCommandText = Properties.Settings.Default.CustomRemoteDataLoadCommand;
+
+            if (d.ShowDialog() == DialogResult.OK)
+            {
+                Properties.Settings.Default.CustomRemoteDataLoadCommand = d.LoadCommandText;
+                Properties.Settings.Default.CustomRemoteDataSaveCommand = d.SaveCommandText;
+                Properties.Settings.Default.Save();
+            }
+
         }
     }
 }
