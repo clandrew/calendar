@@ -75,6 +75,8 @@ namespace Calendar
         // Returns string error on failure.
         string TryParseDataFile(string filePath)
         {
+            entries.Clear();
+
             string[] lines = null;
             try
             {
@@ -359,6 +361,7 @@ namespace Calendar
 
         private void RefreshImpl()
         {
+            OpenImpl(currentlyOpenedFilePath);
             displayedMonth = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1);
             InitializeMonth();
             panel1.Invalidate();
