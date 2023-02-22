@@ -39,6 +39,8 @@ namespace Calendar
             displayedMonth = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1);
             InitializeMonth();
 
+            saveToolStripMenuItem1.Enabled = false;
+
             autoopenLastFileToolStripMenuItem.Checked = Properties.Settings.Default.AutoOpenLastFile;
 
             if (autoopenLastFileToolStripMenuItem.Checked)
@@ -133,6 +135,7 @@ namespace Calendar
             }
 
             currentlyOpenedFilePath = filePath;
+            saveToolStripMenuItem1.Enabled = true;
 
             laidOut.AttachNotes(entries);
             panel1.Invalidate();
@@ -399,6 +402,14 @@ namespace Calendar
                 return;
             }
 
+            if (currentlyOpenedFilePath == null)
+            {
+                MessageBox.Show("No local file is opened.", "Error");
+                return;
+            }
+
+            SaveImpl(currentlyOpenedFilePath);
+
             RunSemicolonDelimitedCommands(saveCmd);
         }
 
@@ -408,6 +419,12 @@ namespace Calendar
             if (loadCmd == null || loadCmd.Length == 0)
             {
                 MessageBox.Show("No custom remote data load command was specified.", "Error");
+                return;
+            }
+
+            if (currentlyOpenedFilePath == null)
+            {
+                MessageBox.Show("No local file is opened.", "Error");
                 return;
             }
 
