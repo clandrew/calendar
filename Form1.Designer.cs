@@ -288,7 +288,6 @@ namespace Calendar
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.MaximizeBox = false;
-            this.MinimizeBox = false;
             this.Name = "Form1";
             this.Text = "Calendar";
             this.menuStrip1.ResumeLayout(false);
