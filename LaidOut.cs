@@ -49,7 +49,17 @@ namespace Calendar
 
             blueBrush = new SolidBrush(Color.LightBlue);
 
-            FontFamily fontFamily = new FontFamily("Segoe UI Emoji");
+            FontFamily fontFamily;
+            try
+            {
+                fontFamily = new FontFamily("Segoe UI Emoji");
+            }
+            catch (System.ArgumentException e)
+            {
+                // Use fallback font-- Win7 path
+                fontFamily = new FontFamily("Arial");
+            }
+
             dayNumberFont = new Font(fontFamily, 16, FontStyle.Regular, GraphicsUnit.Point);
             noteFont = new Font(fontFamily, 10, FontStyle.Regular, GraphicsUnit.Point);
 
