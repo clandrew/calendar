@@ -28,10 +28,17 @@ namespace Calendar
         }
         DayOfWeekLabelCell[] dayOfWeekLabelCells;
 
+        enum Appearance
+        {
+            Opaque,
+            Semitransparent,
+            Hidden
+        }
+
         class DateCell
         {
             public bool Shade;
-            public bool OutlineAndOpaque;
+            public Appearance Appearance;
             public Rectangle Region;
             public string DayNumberString;
             public DateTime Date;
@@ -106,6 +113,14 @@ namespace Calendar
             }
         }
 
+        enum Iter
+        {
+            BeforeCurrentMonth,
+            InCurrentMonth,
+            AfterCurrentMonth,
+            Hidden
+        }
+
         public void LayOut(
             int panelWidth,
             int panelHeight,
@@ -124,6 +139,8 @@ namespace Calendar
             int dayOfWeekStartIndexForThisMonth = (int)displayedMonth.DayOfWeek;
             currentDay = currentDay.AddDays(-dayOfWeekStartIndexForThisMonth);
 
+            Iter iter = currentDay.Month == displayedMonth.Month? Iter.InCurrentMonth : Iter.BeforeCurrentMonth;
+
             int cellIndex = 0;
             for (int yDay = 0; yDay < 6; ++yDay)
             {
@@ -138,8 +155,18 @@ namespace Calendar
 
                     dateCells[cellIndex].Shade = currentDay == DateTime.Today;
 
-                    bool belongsToDisplayedMonth = currentDay.Month == displayedMonth.Month;
-                    dateCells[cellIndex].OutlineAndOpaque = belongsToDisplayedMonth;
+                    if (iter == Iter.InCurrentMonth)
+                    {
+                        dateCells[cellIndex].Appearance = Appearance.Opaque;
+                    }
+                    else if (iter == Iter.BeforeCurrentMonth || iter == Iter.AfterCurrentMonth)
+                    {
+                        dateCells[cellIndex].Appearance = Appearance.Semitransparent;
+                    }
+                    else if (iter == Iter.Hidden)
+                    {
+                        dateCells[cellIndex].Appearance = Appearance.Hidden;
+                    }
 
                     dateCells[cellIndex].DayNumberString = currentDay.Day.ToString();
 
@@ -152,6 +179,19 @@ namespace Calendar
 
                     currentDay = currentDay.AddDays(1);
                     cellIndex++;
+
+                    if (iter == Iter.BeforeCurrentMonth && currentDay.Month == displayedMonth.Month)
+                    {
+                        iter = Iter.InCurrentMonth;
+                    }
+                    else if (iter == Iter.InCurrentMonth && currentDay.Month != displayedMonth.Month)
+                    {
+                        iter = Iter.AfterCurrentMonth;
+                    }
+                    else if (iter == Iter.AfterCurrentMonth && currentDay.DayOfWeek == DayOfWeek.Sunday)
+                    {
+                        iter = Iter.Hidden;
+                    }
                 }
             }
         }
@@ -194,23 +234,24 @@ namespace Calendar
             // Draw calendar days
             for (int i = 0; i < 42; i++)
             {
-                if (dateCells[i].Shade)
+                Brush brush = null;
+                if (dateCells[i].Appearance == Appearance.Opaque)
                 {
-                    graphics.FillRectangle(blueBrush, dateCells[i].Region);
-                }
+                    if (dateCells[i].Shade)
+                    {
+                        graphics.FillRectangle(blueBrush, dateCells[i].Region);
+                    }
 
-                Brush brush;
-                Pen pen;
-                if (dateCells[i].OutlineAndOpaque)
-                {
                     brush = blackBrush;
-                    pen = blackPen;
                     graphics.DrawRectangle(blackPen, dateCells[i].Region);
                 }
-                else
+                else if (dateCells[i].Appearance == Appearance.Semitransparent)
                 {
                     brush = grayBrush;
-                    pen = grayPen;
+                }
+                else if (dateCells[i].Appearance == Appearance.Hidden)
+                {
+                    continue;
                 }
 
                 graphics.DrawString(
