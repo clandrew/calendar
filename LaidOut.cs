@@ -287,9 +287,9 @@ namespace Calendar
 
         public PickResult Pick(int x, int y)
         {
-            for (int i=0; i<35; ++i)
+            for (int i=0; i<42; ++i)
             {
-                if (dateCells[i].Region.Contains(x, y))
+                if (dateCells[i].Region.Contains(x, y) && dateCells[i].Appearance != Appearance.Hidden)
                 {
                     PickResult result = new PickResult();
                     result.Entry = dateCells[i].SourceEntry;
