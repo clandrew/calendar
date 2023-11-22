@@ -66,7 +66,7 @@ namespace Calendar
             // 
             this.panel1.Location = new System.Drawing.Point(15, 85);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(980, 600);
+            this.panel1.Size = new System.Drawing.Size(980, 678);
             this.panel1.TabIndex = 0;
             this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
             this.panel1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.panel1_MouseClick);
@@ -83,7 +83,7 @@ namespace Calendar
             // 
             // previousMonthButton
             // 
-            this.previousMonthButton.Location = new System.Drawing.Point(15, 705);
+            this.previousMonthButton.Location = new System.Drawing.Point(15, 780);
             this.previousMonthButton.Name = "previousMonthButton";
             this.previousMonthButton.Size = new System.Drawing.Size(148, 44);
             this.previousMonthButton.TabIndex = 2;
@@ -93,7 +93,7 @@ namespace Calendar
             // 
             // nextMonthButton
             // 
-            this.nextMonthButton.Location = new System.Drawing.Point(847, 705);
+            this.nextMonthButton.Location = new System.Drawing.Point(847, 780);
             this.nextMonthButton.Name = "nextMonthButton";
             this.nextMonthButton.Size = new System.Drawing.Size(148, 44);
             this.nextMonthButton.TabIndex = 3;
@@ -279,7 +279,7 @@ namespace Calendar
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1008, 761);
+            this.ClientSize = new System.Drawing.Size(1008, 836);
             this.Controls.Add(this.nextMonthButton);
             this.Controls.Add(this.previousMonthButton);
             this.Controls.Add(this.monthLabel);

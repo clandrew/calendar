@@ -73,9 +73,9 @@ namespace Calendar
             int w = panelWidth - 1;
             int h = panelHeight - 1;
             int dayW = w / 7;
-            int dayH = (int)((float)h / 5.5f);
+            int dayH = (int)((float)h / 6.5f);
             int dayOfWeekLabelW = dayW;
-            int dayOfWeekLabelH = dayH / 3;
+            int dayOfWeekLabelH = dayH / 2;
             dayOfWeekLabelCells = new DayOfWeekLabelCell[7];
 
             for (int i = 0; i < 7; i++)
@@ -115,17 +115,17 @@ namespace Calendar
             int w = panelWidth - 1;
             int h = panelHeight - 1;
             int dayW = w / 7;
-            int dayH = (int)((float)h / 5.5f);
-            int dayOfWeekLabelH = dayH / 3;
+            int dayH = (int)((float)h / 6.5f);
+            int dayOfWeekLabelH = dayH / 2;
 
-            dateCells = new DateCell[35];
+            dateCells = new DateCell[42];
 
             DateTime currentDay = displayedMonth;
             int dayOfWeekStartIndexForThisMonth = (int)displayedMonth.DayOfWeek;
             currentDay = currentDay.AddDays(-dayOfWeekStartIndexForThisMonth);
 
             int cellIndex = 0;
-            for (int yDay = 0; yDay < 5; ++yDay)
+            for (int yDay = 0; yDay < 6; ++yDay)
             {
                 for (int xDay = 0; xDay < 7; ++xDay)
                 {
@@ -159,7 +159,7 @@ namespace Calendar
         public void AttachNotes(List<Form1.Entry> entries)
         {
             int cellIndex = 0;
-            for (int yDay = 0; yDay < 5; ++yDay)
+            for (int yDay = 0; yDay < 6; ++yDay)
             {
                 for (int xDay = 0; xDay < 7; ++xDay)
                 {
@@ -192,7 +192,7 @@ namespace Calendar
             }
 
             // Draw calendar days
-            for (int i = 0; i < 35; i++)
+            for (int i = 0; i < 42; i++)
             {
                 if (dateCells[i].Shade)
                 {
