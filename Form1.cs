@@ -27,10 +27,6 @@ namespace Calendar
 
             FixDefaultPrintButton();
 
-            monthLabel.Location = new Point(
-                this.Width / 2 - (monthLabel.Width / 2), 
-                monthLabel.Location.Y);
-
             entries = new List<Entry>();
 
             laidOut = new LaidOut();
@@ -172,19 +168,11 @@ namespace Calendar
         void InitializeMonth()
         {
             laidOut.LayOut(panel1.Width, panel1.Height, displayedMonth, entries);
-            ModifyMonthLabel();
-        }
-
-        public void ModifyMonthLabel()
-        {
-            string text = displayedMonth.ToString("MMMM") + " " + displayedMonth.Year;
-            monthLabel.Text = text;
-            monthLabel.Location = new Point((panel1.Width - monthLabel.Width) / 2, monthLabel.Location.Y);
         }
 
         private void panel1_Paint(object sender, PaintEventArgs e)
         {
-            laidOut.Draw(e.Graphics, 0, 0);
+            laidOut.Draw(e.Graphics, 0, 0, panel1.Width, panel1.Height);
         }
         private void previousMonthButton_Click(object sender, EventArgs e)
         {
@@ -241,19 +229,7 @@ namespace Calendar
 
         private void printDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
         {
-            Bitmap temp = new Bitmap(monthLabel.Width, monthLabel.Height);
-            Color prevColor = monthLabel.BackColor;
-            monthLabel.BackColor = Color.White;
-            monthLabel.DrawToBitmap(temp, new Rectangle(0, 0, temp.Width, temp.Height));
-            e.Graphics.DrawImageUnscaled(
-                temp, 
-                e.MarginBounds.X + (e.MarginBounds.Width/2) - (temp.Width / 2), 
-                0);
-            monthLabel.BackColor = prevColor;
-
-            int w = panel1.Width - 1;
-            int xOrigin = e.MarginBounds.X + (e.MarginBounds.Width / 2) - (w / 2);
-            laidOut.Draw(e.Graphics, xOrigin, temp.Height+5);
+            laidOut.Draw(e.Graphics, 0, 0, panel1.Width, panel1.Height);
         }
 
         private bool SaveImpl(string fileName)

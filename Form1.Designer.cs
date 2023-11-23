@@ -32,7 +32,6 @@ namespace Calendar
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.panel1 = new System.Windows.Forms.Panel();
-            this.monthLabel = new System.Windows.Forms.Label();
             this.previousMonthButton = new System.Windows.Forms.Button();
             this.nextMonthButton = new System.Windows.Forms.Button();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
@@ -64,22 +63,12 @@ namespace Calendar
             // 
             // panel1
             // 
-            this.panel1.Location = new System.Drawing.Point(15, 85);
+            this.panel1.Location = new System.Drawing.Point(15, 27);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(980, 678);
+            this.panel1.Size = new System.Drawing.Size(980, 736);
             this.panel1.TabIndex = 0;
             this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
             this.panel1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.panel1_MouseClick);
-            // 
-            // monthLabel
-            // 
-            this.monthLabel.AutoSize = true;
-            this.monthLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.monthLabel.Location = new System.Drawing.Point(376, 29);
-            this.monthLabel.Name = "monthLabel";
-            this.monthLabel.Size = new System.Drawing.Size(370, 55);
-            this.monthLabel.TabIndex = 1;
-            this.monthLabel.Text = "JANUARY 2023";
             // 
             // previousMonthButton
             // 
@@ -282,7 +271,6 @@ namespace Calendar
             this.ClientSize = new System.Drawing.Size(1008, 836);
             this.Controls.Add(this.nextMonthButton);
             this.Controls.Add(this.previousMonthButton);
-            this.Controls.Add(this.monthLabel);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.menuStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -301,7 +289,6 @@ namespace Calendar
         #endregion
 
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Label monthLabel;
         private System.Windows.Forms.Button previousMonthButton;
         private System.Windows.Forms.Button nextMonthButton;
         private System.Windows.Forms.MenuStrip menuStrip1;

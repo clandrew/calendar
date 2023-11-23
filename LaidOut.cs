@@ -18,6 +18,12 @@ namespace Calendar
 
         Font dayNumberFont;
         Font noteFont;
+        Font monthFont;
+
+        string currentMonthName;
+
+        const int monthLabelHeight = 70;
+
 
         class DayOfWeekLabelCell
         {
@@ -69,6 +75,7 @@ namespace Calendar
 
             dayNumberFont = new Font(fontFamily, 16, FontStyle.Regular, GraphicsUnit.Point);
             noteFont = new Font(fontFamily, 10, FontStyle.Regular, GraphicsUnit.Point);
+            monthFont = new Font(fontFamily, 36, FontStyle.Bold, GraphicsUnit.Point);
 
         }
 
@@ -102,7 +109,7 @@ namespace Calendar
             {
                 dayOfWeekLabelCells[i].Region = new Rectangle(
                     i * dayOfWeekLabelW,
-                    0,
+                    monthLabelHeight,
                     dayOfWeekLabelW,
                     dayOfWeekLabelH);
 
@@ -127,6 +134,8 @@ namespace Calendar
             DateTime displayedMonth,
             List<Form1.Entry> entries)
         {
+            currentMonthName = displayedMonth.ToString("MMMM") + " " + displayedMonth.Year;
+
             int w = panelWidth - 1;
             int h = panelHeight - 1;
             int dayW = w / 7;
@@ -149,7 +158,7 @@ namespace Calendar
                     dateCells[cellIndex] = new DateCell();
                     dateCells[cellIndex].Region = new Rectangle(
                         xDay * dayW,
-                        yDay * dayH + dayOfWeekLabelH,
+                        yDay * dayH + dayOfWeekLabelH + monthLabelHeight,
                         dayW,
                         dayH);
 
@@ -215,8 +224,12 @@ namespace Calendar
             }
         }
 
-        public void Draw(Graphics graphics, int xOrigin, int yOrigin)
+        public void Draw(Graphics graphics, int xOrigin, int yOrigin, int panelWidth, int panelHeight)
         {
+            SizeF monthDimensions = graphics.MeasureString(currentMonthName, monthFont);
+            PointF monthTextLocation = new PointF((panelWidth - monthDimensions.Width) / 2, 0);
+            graphics.DrawString(currentMonthName, monthFont, blackBrush, monthTextLocation);
+
             graphics.TranslateTransform(xOrigin, yOrigin);
 
             // Draw day-of-week labels
