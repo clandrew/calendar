@@ -22,7 +22,7 @@ namespace Calendar
 
         string currentMonthName;
 
-        const int monthLabelHeight = 70;
+        const int monthLabelHeight = 56;
 
 
         class DayOfWeekLabelCell
@@ -87,9 +87,9 @@ namespace Calendar
             int w = panelWidth - 1;
             int h = panelHeight - 1;
             int dayW = w / 7;
-            int dayH = (int)((float)h / 6.5f);
+            int dayH = (int)((float)h / 7.5f);
             int dayOfWeekLabelW = dayW;
-            int dayOfWeekLabelH = dayH / 2;
+            int dayOfWeekLabelH = dayH / 3;
             dayOfWeekLabelCells = new DayOfWeekLabelCell[7];
 
             for (int i = 0; i < 7; i++)
@@ -139,8 +139,8 @@ namespace Calendar
             int w = panelWidth - 1;
             int h = panelHeight - 1;
             int dayW = w / 7;
-            int dayH = (int)((float)h / 6.5f);
-            int dayOfWeekLabelH = dayH / 2;
+            int dayH = (int)((float)h / 7.5f);
+            int dayOfWeekLabelH = dayH / 3;
 
             dateCells = new DateCell[42];
 
@@ -224,13 +224,11 @@ namespace Calendar
             }
         }
 
-        public void Draw(Graphics graphics, int xOrigin, int yOrigin, int panelWidth, int panelHeight)
+        public void Draw(Graphics graphics, int panelWidth, int panelHeight)
         {
             SizeF monthDimensions = graphics.MeasureString(currentMonthName, monthFont);
-            PointF monthTextLocation = new PointF((panelWidth - monthDimensions.Width) / 2, 0);
+            PointF monthTextLocation = new PointF((panelWidth - monthDimensions.Width) / 2, -10);
             graphics.DrawString(currentMonthName, monthFont, blackBrush, monthTextLocation);
-
-            graphics.TranslateTransform(xOrigin, yOrigin);
 
             // Draw day-of-week labels
             for (int i = 0; i < 7; i++)

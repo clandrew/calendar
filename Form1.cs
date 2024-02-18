@@ -172,7 +172,7 @@ namespace Calendar
 
         private void panel1_Paint(object sender, PaintEventArgs e)
         {
-            laidOut.Draw(e.Graphics, 0, 0, panel1.Width, panel1.Height);
+            laidOut.Draw(e.Graphics, panel1.Width, panel1.Height);
         }
         private void previousMonthButton_Click(object sender, EventArgs e)
         {
@@ -229,7 +229,7 @@ namespace Calendar
 
         private void printDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
         {
-            laidOut.Draw(e.Graphics, 0, 0, panel1.Width, panel1.Height);
+            laidOut.Draw(e.Graphics, panel1.Width, panel1.Height);
         }
 
         private bool SaveImpl(string fileName)
